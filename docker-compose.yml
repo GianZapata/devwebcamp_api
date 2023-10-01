@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: nest-app
+    image: gianzapata/devwebcamp-nest:latest
+    depends_on:
+      - db
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      FRONTEND_URL: ${FRONTEND_URL}
+      BASE_URL: ${BASE_URL}
+      PORT: ${PORT}
+      STATE: ${STATE}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_POST: ${MAIL_POST}
+      MAIL_USER: ${MAIL_USER}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_REPLY: ${MAIL_REPLY}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
+      PAYPAL_OAUTH_URL: ${PAYPAL_OAUTH_URL}
+      PAYPAL_ORDERS_URL: ${PAYPAL_ORDERS_URL}
+  db:
+    container_name: ${DB_NAME}
+    image: mysql:8.0.32
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql-db:/mysql:/data/db
+    ports:
+      - 3306:3306
+
+volumes:
+  mysql-db:
+    external: false
